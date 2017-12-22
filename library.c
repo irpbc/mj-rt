@@ -3,21 +3,27 @@
 #include <stdio.h>
 
 
+#define EXPORT __declspec(dllexport)
+
 /**
  * Called as DllImport from .net to trigger library load.
  */
-void mj_init(void) {
+EXPORT void mj_init() {
 
 }
 
-void mj_hello(void) {
+EXPORT void mj_hello() {
     printf("Hello, World!\n");
 }
 
-int mj_putchar(int c) {
+EXPORT int mj_putchar(int c) {
     return putchar(c);
 }
 
-int mj_puts(const char* str) {
+EXPORT int mj_puts(const char* str) {
     return puts(str);
+}
+
+EXPORT int mj_printf_int(const char* str, int arg) {
+    return printf(str, arg);
 }
