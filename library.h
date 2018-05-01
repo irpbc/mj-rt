@@ -9,6 +9,8 @@
     #define EXPORT
 #endif
 
+EXPORT void* mjrt_alloc(int size);
+
 EXPORT void mj_hello(void);
 EXPORT int32_t mj_putchar(int32_t c);
 EXPORT int32_t mj_puts(const char* str);

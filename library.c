@@ -3,7 +3,11 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <inttypes.h>
+#include <stdlib.h>
 
+EXPORT void* mjrt_alloc(int size) {
+    return malloc((size_t) size);
+}
 
 EXPORT void mj_hello() {
     printf("Hello, World!\n");
