@@ -1,15 +1,18 @@
 #ifndef MJ_RT_LIBRARY_H
 #define MJ_RT_LIBRARY_H
 
-#include <stdint.h>
+#include <cstdint>
+#include "Heap.h"
 
 #ifdef _WIN32
-    #define EXPORT __declspec(dllexport)
+#define EXPORT __declspec(dllexport)
 #else
-    #define EXPORT
+#define EXPORT
 #endif
 
-EXPORT void* mjrt_alloc(int size);
+extern "C" {
+
+EXPORT void mjrt_init_runtime(uint8_t* LLVM_StackMaps);
 
 EXPORT void mj_hello(void);
 EXPORT int32_t mj_putchar(int32_t c);
@@ -21,4 +24,5 @@ EXPORT int64_t mj_scan_long();
 EXPORT float mj_scan_float();
 EXPORT double mj_scan_double();
 
+}
 #endif

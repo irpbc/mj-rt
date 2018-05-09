@@ -1,12 +1,19 @@
 #include "library.h"
 
-#include <stdio.h>
-#include <stdarg.h>
-#include <inttypes.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdarg>
 
-EXPORT void* mjrt_alloc(int size) {
-    return malloc((size_t) size);
+Heap heap;
+
+extern "C" {
+
+EXPORT void mjrt_init_runtime(uint8_t* LLVM_StackMaps) {
+    heap.initialize(1 * 1024, LLVM_StackMaps);
+}
+
+EXPORT void* mjrt_alloc_impl(ObjectDescriptor* meta, uint64_t rsp) {
+    void* previousFramePointer = (void*)rsp;
+    return heap.allocateObject(meta, previousFramePointer);
 }
 
 EXPORT void mj_hello() {
@@ -30,13 +37,13 @@ EXPORT int32_t mj_printf(const char* str, ...) {
 
 EXPORT int32_t mj_scan_int() {
     int32_t x = 0;
-    scanf("%"PRId32, &x);
+    scanf("%" PRId32, &x);
     return x;
 }
 
 EXPORT int64_t mj_scan_long() {
     int64_t x = 0L;
-    scanf("%"PRId64 , &x);
+    scanf("%" PRId64, &x);
     return x;
 }
 
@@ -50,4 +57,6 @@ EXPORT double mj_scan_double() {
     double x = 0.0;
     scanf("%lf", &x);
     return x;
+}
+
 }
