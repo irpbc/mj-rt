@@ -17,6 +17,7 @@ void Heap::initialize(uint32_t bytes, uint8_t* LLVM_StackMaps) {
     void* stackmaps = LLVM_StackMaps;
 
     spTable = StatepointTable::generateTable(stackmaps, 0.5);
+	DEBUG_EXPR(spTable->print(stdout, true));
 }
 
 ObjectBase* Heap::allocateObject(ObjectDescriptor* meta, void* compiledCodeFrameAddress) {

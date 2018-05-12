@@ -184,54 +184,60 @@ numRecords of the following {
 
 ******** END OF LAYOUT ********/
 
-typedef struct __attribute__((packed)) {
+#ifdef _MSC_VER
+#define PACK( __Declaration__ ) __pragma( pack(push, 1) ) __Declaration__ __pragma( pack(pop) )
+#else
+#define PACK( __Declaration__ ) __Declaration__ __attribute__((__packed__))
+#endif
+
+PACK(struct stackmap_header_t {
     uint8_t version;
     uint8_t reserved1;
     uint16_t reserved2;
     uint32_t numFunctions;
     uint32_t numConstants;
     uint32_t numRecords;
-} stackmap_header_t;
+});
 
-typedef struct __attribute__((packed)) {
+PACK(struct function_info_t {
     uint64_t address;
     uint64_t stackSize;
     uint64_t callsiteCount;   // see https://reviews.llvm.org/D23487
-} function_info_t;
+});
 
-typedef struct __attribute__((packed)) {
+PACK(struct callsite_header_t {
     uint64_t id;
     uint32_t codeOffset;  // from the entry of the function
     uint16_t flags;
     uint16_t numLocations;
-} callsite_header_t;
+});
 
-typedef enum {
+enum location_kind_t {
     Register = 0x1,
     Direct = 0x2,
     Indirect = 0x3,
     Constant = 0x4,
     ConstIndex = 0x5
-} location_kind_t;
+};
 
-typedef struct __attribute__((packed)) {
+PACK(struct value_location_t {
     uint8_t kind;       // possibilities come from location_kind_t, but is one byte in size.
     uint8_t flags;      // expected to be 0
     uint16_t locSize;
     uint16_t regNum;    // Dwarf register num
     uint16_t reserved;  // expected to be 0
     int32_t offset;     // either an offset or a "Small Constant"
-} value_location_t;
+});
 
-typedef struct __attribute__((packed)) {
+PACK(struct liveout_header_t {
     uint16_t padding;
     uint16_t numLiveouts;
-} liveout_header_t;
+});
 
-typedef struct __attribute__((packed)) {
+PACK(struct liveout_location_t {
     uint16_t regNum;    // Dwarf register num
     uint8_t flags;
     uint8_t size;       // in bytes
-} liveout_location_t;
+});
 
 #endif /* __LLVM_STATEPOINT_UTILS_STACKMAP__ */

@@ -1,7 +1,13 @@
 #include "library.h"
 
-#include <cstdio>
 #include <cstdarg>
+
+#ifdef _MSC_VER
+#define ALLOC_CC __fastcall
+#else
+#define ALLOC_CC
+#endif
+
 
 Heap heap;
 
@@ -11,7 +17,7 @@ EXPORT void mjrt_init_runtime(uint8_t* LLVM_StackMaps) {
     heap.initialize(1 * 1024, LLVM_StackMaps);
 }
 
-EXPORT void* mjrt_alloc_impl(ObjectDescriptor* meta, uint64_t rsp) {
+EXPORT void* ALLOC_CC mjrt_alloc_impl(ObjectDescriptor* meta, uint64_t rsp) {
     void* previousFramePointer = (void*)rsp;
     return heap.allocateObject(meta, previousFramePointer);
 }

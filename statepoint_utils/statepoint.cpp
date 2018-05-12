@@ -402,7 +402,6 @@ void FrameInfo::print(FILE *stream) {
     fprintf(stream, "\t\treturn address: 0x%" PRIX64 "\n", retAddr);
     fprintf(stream, "\t\tframe size: %" PRIu64 "\n", frameSize);
 
-    uint16_t numSlots = numSlots;
     PointerSlot *curSlot = slots;
     fprintf(stream, "\t\tnum live ptrs: %" PRIu16 "\n", numSlots);
 

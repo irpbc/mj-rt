@@ -13,6 +13,7 @@
 extern "C" {
 
 EXPORT void mjrt_init_runtime(uint8_t* LLVM_StackMaps);
+EXPORT void* mjrt_alloc_impl(ObjectDescriptor* meta, uint64_t rsp);
 
 EXPORT void mj_hello(void);
 EXPORT int32_t mj_putchar(int32_t c);
