@@ -1,2 +1,3 @@
 EXPORTS
 mjrt_alloc
+mjrt_alloc_array

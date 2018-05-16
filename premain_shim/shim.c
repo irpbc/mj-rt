@@ -12,9 +12,12 @@
 #ifdef _WIN32
 #define _CRT_SECURE_NO_WARNINGS
 #include "pe_header.h"
+#define DLL_IMPORT __declspec(dllimport)
+#else
+#define DLL_IMPORT
 #endif
 
-void mjrt_init_runtime(void *);
+DLL_IMPORT void mjrt_init_runtime(uint8_t*);
 
 void _premain() {
 

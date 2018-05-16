@@ -20,12 +20,12 @@ info API is much more low level so we use some (heavily shrinked down) code from
 ## [MJ Runtime dynamic library](runtime)
 
 This is the MJ runtime proper. It contains an accurate compacting garbage collector.
-The GC is triggered if an allocation cannot fit into available heap space. So it does not
-support multi threaded programs, and it runs only when heap is exhausted. This makes it very 
-small (~500 lines, including some, heavily modified, code from 
-[kavon/llvm-statepoint-utils](https://github.com/kavon/llvm-statepoint-utils)). 
+The GC is triggered if an allocation cannot fit into available heap space. It does not
+support multi threaded programs, and is not generational. This makes it very small (including some, 
+heavily modified, code from [kavon/llvm-statepoint-utils](https://github.com/kavon/llvm-statepoint-utils)). 
 It reads LLVM stack maps, populates a hash table with return addresses as keys. When GC is
-triggered it scans the stack for roots using this data structure.
+triggered it scans the stack for roots using this data structure. "Lisp 2" algorithm is implemented,
+which performs marking, and 3 passes for compacting the heap.
 
 The runtime library also contains all the built in functions of the language.
 
