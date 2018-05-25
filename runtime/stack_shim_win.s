@@ -1,16 +1,15 @@
-EXTERN mjrt_alloc_impl : PROC
-EXTERN mjrt_alloc_array_impl : PROC
-.CODE
-mjrt_alloc PROC
-; move stack pointer to rdx which,
-; by calling convention holds the second parameter
-mov rdx, rsp
-jmp mjrt_alloc_impl
-mjrt_alloc ENDP
-mjrt_alloc_array PROC
-; move stack pointer to r8 which,
-; by calling convention holds the second parameter
-mov r8, rsp
-jmp mjrt_alloc_array_impl
-mjrt_alloc_array ENDP
-END
+	.text
+	.globl mjrt_alloc
+	.globl mjrt_alloc_array
+	.extern mjrt_alloc_impl
+	.extern mjrt_alloc_array_impl
+mjrt_alloc:
+    # move stack pointer to %rsi which,
+    # by calling convention holds the second parameter
+	mov %rsp, %rdx
+	jmp mjrt_alloc_impl
+mjrt_alloc_array:
+    # move stack pointer to %rdx which,
+    # by calling convention holds the third parameter
+	mov %rsp, %r8
+	jmp mjrt_alloc_array_impl

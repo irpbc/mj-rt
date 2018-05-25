@@ -18,7 +18,7 @@ BOOL IsValidPEHeader(uint8_t* baseAddress) {
 
 void* getPESectionDataByName(const char *sectionName) {
 
-    uint8_t* baseAddress = GetModuleHandle(NULL);
+    uint8_t* baseAddress = (uint8_t*)GetModuleHandle(NULL);
 
     if (!IsValidPEHeader(baseAddress))
         return FALSE;
@@ -28,10 +28,10 @@ void* getPESectionDataByName(const char *sectionName) {
     PIMAGE_FILE_HEADER fileHeader = &ntHeader->FileHeader;
     PIMAGE_OPTIONAL_HEADER64 optionalHeader = &ntHeader->OptionalHeader;
 
-    uint8_t* firstSectionHeader = IMAGE_FIRST_SECTION(ntHeader);
+    PIMAGE_SECTION_HEADER firstSectionHeader = IMAGE_FIRST_SECTION(ntHeader);
     for (int i = 0; i < fileHeader->NumberOfSections; i++) {
 
-        PIMAGE_SECTION_HEADER sectionHeader = (PIMAGE_SECTION_HEADER)(firstSectionHeader + i * sizeof(IMAGE_SECTION_HEADER));
+        PIMAGE_SECTION_HEADER sectionHeader = firstSectionHeader + i;
         if (!strncmp((PCHAR)sectionHeader->Name, sectionName, IMAGE_SIZEOF_SHORT_NAME)) {
             void* dataPtr = baseAddress + sectionHeader->VirtualAddress;
             return dataPtr;
