@@ -14,7 +14,8 @@ Heap heap;
 extern "C" {
 
 EXPORT void mjrt_init_runtime(uint8_t* LLVM_StackMaps) {
-    heap.initialize(1 * 1024, LLVM_StackMaps);
+    // 10 MB
+    heap.initialize(10 * 1024 * 1024, LLVM_StackMaps);
 }
 
 EXPORT void* ALLOC_CC mjrt_alloc_impl(ObjectDescriptor* meta, uint64_t rsp) {
