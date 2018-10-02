@@ -10,10 +10,17 @@
 #define EXPORT
 #endif
 
+#ifdef _MSC_VER
+#define ALLOC_CC __fastcall
+#else
+#define ALLOC_CC
+#endif
+
 extern "C" {
 
 EXPORT void mjrt_init_runtime(uint8_t* LLVM_StackMaps);
-EXPORT void* mjrt_alloc_impl(ObjectDescriptor* meta, uint64_t rsp);
+EXPORT void* ALLOC_CC mjrt_alloc_impl(ObjectDescriptor* meta, uint64_t rsp);
+EXPORT void* ALLOC_CC mjrt_alloc_array_impl(ObjectDescriptor* meta, int32_t length, uint64_t rsp);
 
 EXPORT void mj_hello(void);
 EXPORT int32_t mj_putchar(int32_t c);
