@@ -57,7 +57,7 @@ struct ArrayBase {
     // ----- End ObjectBase ------ //
 
     uint32_t length;
-    ObjectBase* elems[10];
+    char elems[];
 
     inline ObjectBase* firstArrayElemenet() {
         return (ObjectBase*)((uint8_t*)this + sizeof(ArrayBase));

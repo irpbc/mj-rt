@@ -32,5 +32,9 @@ EXPORT int64_t mj_scan_long();
 EXPORT float mj_scan_float();
 EXPORT double mj_scan_double();
 
+EXPORT int mj_getc();
+EXPORT int mj_parseInt(ArrayBase* chars);
+EXPORT char mj_intToChar(int32_t num);
+
 }
 #endif

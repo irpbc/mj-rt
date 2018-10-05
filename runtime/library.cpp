@@ -71,4 +71,18 @@ EXPORT double mj_scan_double() {
     return x;
 }
 
+EXPORT int mj_getc() {
+    return fgetc(stdin);
+}
+
+EXPORT int mj_parseInt(ArrayBase* chars) {
+    char* end = chars->elems + chars->length;
+    int value = strtol(chars->elems, &end, 10);
+    return value;
+}
+
+EXPORT char mj_intToChar(int32_t num) {
+    return (char)num;
+}
+
 }
